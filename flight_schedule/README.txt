@@ -16,6 +16,6 @@ The number of flights landing at any given airport at one time is constrained by
 My solution for this project was to create a dedicated route for each plane, and then create loops in python to record 
 the arrival and departure times for each aircraft in a list of flights. 
 
-The list of flights was then output in the form of a csv with (Tail Number, Origin, Destination, Departure Time, Arrival Time)
+The list of flights was then output in the form of a csv with (Tail Number, Origin, Destination, Departure Time, Arrival Time).
 The CSV was then sorted according to tail number and departure time. 
 
