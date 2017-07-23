@@ -1,7 +1,7 @@
 use group14finalproject;
 
 insert into company(idCompany, Name, Address, City, State, ZipCode, PhoneNumber, Contact, Locations)
-values(01,'Customer Connect','5809 Dove Creek','Plano','TX',75093, 9002490,'Zan',1);
+values(01,'Customer Connect','1234 Street Drive','Plano','TX',75093, 1234567890,'John',1);
  
 insert into customers(idCompany,idCustomers,FirstName,LastName)
 values(01,01,"Shaheer","Ali");
