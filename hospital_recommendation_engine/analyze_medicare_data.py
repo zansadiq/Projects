@@ -7,7 +7,7 @@ Created on Fri Jul  7 18:23:30 2017
 """
 
 """
-    Assignment #2: Healthcare Analytics – 
+    Healthcare Analytics – 
     Recommender system for hospitals based on Medicare ratings and patient surveys
 """
 
