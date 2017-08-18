@@ -20,31 +20,37 @@ import numpy as np
 import pandas as pd
 import io
 
-"""
-    Training data: processing
-"""
-
-# Function to grab and process data
 def get_data(url):
+    # Grab the data from the internet
     r = requests.get(url)
+    
+    # Open the data
     data = r.text
     data_set = data.splitlines()
+    
+    # Split the transaction_id from the product_id's
     data_set1 = [re.split(r',', line, maxsplit=1) for line in data_set]
+
+    # Create an array
     data_array = np.asarray(data_set1)
+
+    # Use the arrays to create a dataframe
     data_df = pd.DataFrame(data_array,columns=['transaction_id','product_id'])
-    data_df['product_id'] = data_df['product_id'].apply(lambda row: row.split(','))
+
+    # Split the product_id's for the training data
     data_df.set_index(['transaction_id'],inplace=True)
+
+    data_df['product_id'] = data_df['product_id'].apply(lambda row: row.split(','))
+    
     return data_df
 
-# Training set
-training_df = get_data('http://kevincrook.com/utd/market_basket_training.txt')
-
-# Testing set
-testing_df = get_data('http://kevincrook.com/utd/market_basket_test.txt')
+# Create the training and test sets
+training = get_data('http://kevincrook.com/utd/market_basket_training.txt')
+testing = get_data('http://kevincrook.com/utd/market_basket_test.txt')
 
 # Calculate the frequency for each unique combination of products
 product_combos = dict()
-for i in training_df['product_id']:
+for i in training['product_id']:
     key = tuple(i)
     if key in product_combos:
         product_combos[key] += 1
@@ -56,18 +62,22 @@ product_combos1 = pd.DataFrame(list(product_combos.items()))
 
 # Rename the columns
 product_combos1 = product_combos1.rename(columns={0: "product_id", 1: "count"})
+              
+"""
+    Testing data: processing
+"""
 
 # Store P04 and P08 in a list to be removed 
 remove = ['P04','P08']
 
 # Iterate through the dataframe to find P04 or P08 and extract it
-for k in range(len(testing_df['product_id'])):
+for k in range(len(testing['product_id'])):
     for r in remove:
-        if r in testing_df['product_id'][k]:
-            testing_df['product_id'][k].remove(r)
+        if r in testing['product_id'][k]:
+            testing['product_id'][k].remove(r)
 
 # Convert the lists to tuples
-testing_df['product_id'] = testing_df['product_id'].apply(tuple)
+testing['product_id'] = testing['product_id'].apply(tuple)
 
 """
     Predictions
@@ -77,7 +87,7 @@ testing_df['product_id'] = testing_df['product_id'].apply(tuple)
 matches = {}
 
 # Return the product combos values that are of the appropriate length and the strings match
-for i, entry in enumerate (testing_df.product_id):
+for i, entry in enumerate (testing.product_id):
    
     # Initialize the recommendations
     recommendation = None
@@ -95,7 +105,7 @@ for i, entry in enumerate (testing_df.product_id):
                 recommendation = k[0]
                 recommended_count = count
     # Return a dictionary with the product recommendations as values
-    transaction_id = testing_df.index[i]
+    transaction_id = testing.index[i]
     matches[transaction_id] = recommendation
         
 """
@@ -108,6 +118,6 @@ for i, entry in enumerate (testing_df.product_id):
 with io.open("market_basket_recommendations.txt","w",encoding='utf8') as recommendations:    
     for k,v in matches.items():
         print("{},{}".format(k,v), file=recommendations)
-    recommendations.close()
+
         
     
