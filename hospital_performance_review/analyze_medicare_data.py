@@ -19,9 +19,6 @@ import openpyxl
 import pandas as pd
 import glob
 import sqlite3
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
-
 
 
 url = 'https://data.medicare.gov/views/bg9k-emty/files/0a9879e0-3312-4719-a1db-39fd114890f1?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip'
