@@ -1,16 +1,3 @@
-# Install packages
-install.packages("lubridate")
-install.packages("e1071")
-install.packages("rpart")
-install.packages("pROC")
-install.packages("rpart.plot")
-install.packages("RColorBrewer")
-install.packages("ada")
-install.packages("maboost")
-install.packages("adabag")
-install.packages("ROCR")
-install.packages("data.table")
-install.packages("dplyr")
 
 # Import libraries
 library(lubridate)
@@ -27,8 +14,7 @@ library(data.table)
 library(dplyr)
 
 # Working directory
-# setwd("/Users/zansadiq/Documents/School/Fall 2017/BUAN6341")
-setwd("E:/AML - BUAN 6341")
+# setwd("")
 
 set.seed(100)
 
