@@ -15,3 +15,9 @@ It contains information produced by a Portugese banking institution.
 The information is demographic and marketing-related in nature.
 It contains the results of a marketing campaign encouraging customers to enroll in bank term deposits. 
 The goal here was to predict whether or not the customer would enroll, based on their demographic information and the results of the marketing efforts. 
+
+In order to run the program:
+1) Make sure all libraries are installed
+2) Set working directory
+3) Change file location for “read.csv”
+4) Run program
