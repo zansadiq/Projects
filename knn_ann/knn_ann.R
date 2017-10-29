@@ -15,8 +15,7 @@ library(caret)
 library(data.table)
 
 # Working directory
-# setwd("/Users/zansadiq/Documents/School/Fall 2017/BUAN6341")
-setwd("E:/AML - BUAN 6341")
+# setwd("")
 
 set.seed(100)
 
