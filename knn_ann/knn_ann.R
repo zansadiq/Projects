@@ -22,9 +22,6 @@ set.seed(100)
 options(scipen = 6)
 
 # Load the data
-# crypto_data <- read.csv("Data/all_data.csv")
-# bank_data <- read.csv("Data/bank-additional-full.csv", header = TRUE, sep = ";")
-
 crypto_data <- read.csv("all_data.csv")
 bank_data <- read.csv("bank-additional-full.csv", header = TRUE, sep = ";")
 
