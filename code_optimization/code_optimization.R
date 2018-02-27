@@ -6,7 +6,7 @@ library(sqldf)
 library(tictoc)
 
 # Working directory and initial setup
-setwd("/Users/zansadiq/Documents/School/Spring 2018/BUAN6390")
+setwd("path")
 
 set.seed(100)
 
