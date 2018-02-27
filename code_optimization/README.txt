@@ -1,0 +1,1 @@
+This file contains a comparison of different packages for the ETL process on a given dataset. The two methods used are:1) A combination of the “dplyr” package and “sqldf”2) Using the “data.table” packageIn conclusion, the “data.table” is much better for use in transforming and analyzing large datasets. It performs operations faster on the level of orders of magnitude. 

@@ -1,0 +1,1 @@
+This file contains a program to perform a feature selection algorithm on the bitcoin data referenced in another file. The feature selection was performed using a Random Forest method from the “caret” package in R, as well as using PCA.

@@ -15,13 +15,17 @@ library(caret)
 library(data.table)
 
 # Working directory
-# setwd("")
+
+setwd("E:/AML - BUAN 6341")
 
 set.seed(100)
 
 options(scipen = 6)
 
 # Load the data
+# crypto_data <- read.csv("Data/all_data.csv")
+# bank_data <- read.csv("Data/bank-additional-full.csv", header = TRUE, sep = ";")
+
 crypto_data <- read.csv("all_data.csv")
 bank_data <- read.csv("bank-additional-full.csv", header = TRUE, sep = ";")
 
@@ -121,7 +125,7 @@ bank_ann_predFunc <-function(inData, layer, trainPct, iteration ) {
   ideal_testDS <- class.ind(testDS$targetVar)
   
   #softmax = True requires more than two response categories
-  nn <- nnet(targetVar ~ ., trainDS, size = size, softmax = FALSE, maxit = iteration)
+  nn <- nnet(targetVar ~ ., trainDS, size = layer, softmax = FALSE, maxit = iteration)
   # val_nn <- nnet(targetVar ~ ., valDS, size = 10, softmax = FALSE, maxit = 200)
   # test_nn <- nnet(targetVar ~ ., testDS, size = 10, softmax = FALSE, maxit = 200)
   
@@ -179,6 +183,8 @@ crypto_knn_predFunc <- function(inData, trainPct) {
   val_error <- classification_error(val_conf)
   test_error <- classification_error(test_conf)
   
+  return(plot(caret_crypto_knn))
+  
   return(list(train_error = train_error,
               val_error = val_error,
               test_error = test_error))
@@ -226,6 +232,8 @@ bank_knn_predFunc <- function(inData, trainPct) {
   train_error <- classification_error(train_conf)
   val_error <- classification_error(val_conf)
   test_error <- classification_error(test_conf)
+  
+  return(plot(caret_bank_knn))
   
   return(list(train_error = train_error,
               val_error = val_error,
