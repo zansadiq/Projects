@@ -293,20 +293,16 @@ walk_dat3 <- merge(walk_dat3, y3_personal, all.x = TRUE)
 walk_dat3[is.na(y3_personal), y3_personal := 0]
 
 # Summarize demographics for event RF
-event_demo <- walk_dat3[, lapply(.SD, mean), by = name, .SDcols = c("medage_cy", "divindx_cy", "medhinc_cy", "meddi_cy", "mednw_cy")]
+event_demo_dt <- walk_dat3[, list(age = mean(medage_cy), diversity = mean(divindx_cy), house_inc = mean(medhinc_cy), disposable_inc = mean(meddi_cy), worth = mean(mednw_cy), raised = sum(total_gifts)), by = "name"]
 
-setkey(walk_dat3, name)
-setkey(event_demo, name)
-
-event_demo2 <- merge(event_demo, select(walk_dat3, -medage_cy, -divindx_cy, -medhinc_cy, -meddi_cy, -mednw_cy), all.y = TRUE)
+# Final df for Event model
+event_rf_dat <- sqldf("select a.*, b.age, b.diversity, b.house_inc, b.disposable_inc, b.worth, b.raised from walk_dat3 a join event_demo_dt b on a.name = b.name")
 
 # Summarize info for tapestry RF
-tap_info <- walk_dat3[, lapply(.SD, mean), by = tap_desc, .SDcols = c("medage_cy", "divindx_cy", "medhinc_cy", "meddi_cy", "mednw_cy")]  
+segments_dt <- walk_dat3[, list(age = mean(medage_cy), diversity = mean(divindx_cy), house_inc = mean(medhinc_cy), disposable_inc = mean(meddi_cy), worth = mean(mednw_cy), raised = sum(total_gifts)), by = "tap_desc"]
 
-setkey(walk_dat3, tap_desc)
-setkey(tap_info, tap_desc)
-
-tap_info2 <- merge(tap_info, select(walk_dat3, -medage_cy, -divindx_cy, -medhinc_cy, -meddi_cy, -mednw_cy), all.y = TRUE)
+# Final df for segment model
+segment_rf_dat <- sqldf("select a.*, b.age, b.diversity, b.house_inc, b.disposable_inc, b.worth, b.raised from walk_dat3 a join segments_dt b on a.tap_desc = b.tap_desc")
 
 # End timer
 end2 <- toc()
