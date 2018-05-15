@@ -3,18 +3,19 @@
 """
 Created on Wed May  9 14:48:47 2018
 
-@author: zansadiq
+@author: zxs107020
 """
 
+# Import the required libraries
 import zxs
 import numpy as np
 import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.metrics import classification_report,confusion_matrix, accuracy_score
 
 # Set seed
 np.random.seed(100)
@@ -55,7 +56,7 @@ def model():
 # Create a pipeline
 estimators = []
 estimators.append(('standardize', StandardScaler()))
-estimators.append(('mlp', KerasClassifier(build_fn = model, epochs = 100, batch_size = 5, verbose = 1)))
+estimators.append(('mlp', KerasClassifier(build_fn = model, epochs = 1, batch_size = 5, verbose = 1)))
 pipeline = Pipeline(estimators)
 
 # Run the model
@@ -65,7 +66,11 @@ pipeline.fit(x_train, y_train)
 score = pipeline.evaluate(x_val, y_val, verbose = 1)
 
 # Predictions
-preds = pipeline.predict(np.array(y_test))
+preds = pipeline.predict(x_test)
 
-# Create ROC
-zxs.visualize(y_test, preds)
+# Results
+print(confusion_matrix(y_test, preds))
+
+print(classification_report(y_test, preds))
+
+print(accuracy_score(y_test, preds))
