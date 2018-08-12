@@ -3,7 +3,7 @@
 """
 Created on Fri Mar 23 11:18:46 2018
 
-@author: zansadiq
+@author: zxs107020
 """
 
 import random
