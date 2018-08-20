@@ -58,25 +58,25 @@ data.columns = [x.strip().replace(' ', '_') for x in data.columns]
 
 # Query for returning years
 def get_years():
-    years = list(df['year'].unique().sort_values(ascending = True))
+    years = list(data['year'].unique().sort_values(ascending = True))
     
     return years
 
 # Query for returning months
 def get_months(year):
-    months = df[(df.year == year)][['month']]
+    months = data[(data.year == year)][['month']]
     
     return months
 
 # Query to get crimes
 def get_crimes(year, month):
-    crimes = list(df['fbi_code'].unique.sort_values())
+    crimes = list(data['fbi_code'].unique.sort_values())
     
     return crimes
 
 # Return compiled results
 def get_match_results(year, month, crime):
-    matches = df[(df.year == year) & (df.month == month) & (df.fbi_code == crime)][['id', 'case_number', 'date', 'arrest', 'latitude', 'longitude', 'fbi_code']]
+    matches = data[(data.year == year) & (data.month == month) & (data.fbi_code == crime)][['id', 'case_number', 'date', 'arrest', 'latitude', 'longitude', 'fbi_code']]
     
     return matches
 
@@ -228,8 +228,8 @@ app.layout = html.Div([
 
 def populate_month_selector(year):
     years = get_months(year)
-    return [
-        {'label': month, 'value': month} for month in months]
+    
+    return [{'label': year, 'value': year} for year in years]
     
 # Load crimes into dropdown
 @app.callback(
@@ -274,7 +274,7 @@ def load_month_summary(year, month, crime):
 
     table = []
     if len(results) > 0:
-        summary = calculate_season_summary(results)
+        summary = comp_summ(results)
         table = ff.create_table(summary)
 
     return table
