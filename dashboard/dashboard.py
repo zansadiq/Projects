@@ -46,19 +46,20 @@ data.columns = data.iloc[0]
 # Delete the initial header row
 data = data.reindex(data.index.drop(0))
 
-# Parse the dates
-data['year'] = pd.DatetimeIndex(data['Date']).year
-data['month'] = pd.DatetimeIndex(data['Date']).month
-
 # Fix the casing and remove spaces
 data.columns = [x.lower() for x in data.columns]
 
 # Remove spaces
 data.columns = [x.strip().replace(' ', '_') for x in data.columns]
 
+# Parse the dates
+data = data.drop(columns = 'year')
+data['year'] = pd.DatetimeIndex(data['date']).year
+data['month'] = pd.DatetimeIndex(data['date']).month
+
 # Query for returning years
 def get_years():
-    years = list(data['year'].unique().sort_values(ascending = True))
+    years = sorted(data['year'].unique())
     
     return years
 
@@ -167,50 +168,50 @@ app.layout = html.Div([
         html.Div([
             # Select Division Dropdown
             html.Div([
-                html.Div('Select Year', className='three columns'),
-                html.Div(dcc.Dropdown(id='year-selector',
-                                      options=onLoad_division_options()),
-                         className='nine columns')
+                html.Div('Select Year', className = 'three columns'),
+                html.Div(dcc.Dropdown(id = 'year-selector',
+                                      options = onLoad_division_options()),
+                         className = 'nine columns')
             ]),
 
             # Select Season Dropdown
             html.Div([
-                html.Div('Select Month', className='three columns'),
-                html.Div(dcc.Dropdown(id='month-selector'),
-                         className='nine columns')
+                html.Div('Select Month', className =' three columns'),
+                html.Div(dcc.Dropdown(id = 'month-selector'),
+                         className = 'nine columns')
             ]),
 
             # Select Team Dropdown
             html.Div([
-                html.Div('Select Crime', className='three columns'),
-                html.Div(dcc.Dropdown(id='crime-selector'),
-                         className='nine columns')
+                html.Div('Select Crime', className = 'three columns'),
+                html.Div(dcc.Dropdown(id = 'crime-selector'),
+                         className = 'nine columns')
             ]),
-        ], className='six columns'),
+        ], className = 'six columns'),
 
         # Empty
-        html.Div(className='six columns'),
-    ], className='twleve columns'),
+        html.Div(className = 'six columns'),
+    ], className = 'twleve columns'),
 
     # Match Results Grid
     html.Div([
 
         # Match Results Table
         html.Div(
-            html.Table(id='match-results'),
-            className='six columns'
+            html.Table(id = 'match-results'),
+            className = 'six columns'
         ),
 
         # Season Summary Table and Graph
         html.Div([
             # summary table
-            dcc.Graph(id='month-summary'),
+            dcc.Graph(id = 'month-summary'),
 
             # graph
-            dcc.Graph(id='month-graph')
+            dcc.Graph(id = 'month-graph')
             # style={},
 
-        ], className='six columns')
+        ], className = 'six columns')
     ]),
 ])
     
@@ -295,7 +296,7 @@ def load_months_points_graph(year, month, crime):
 
     figure = []
     if len(results) > 0:
-        figure = plot_graphics(results)
+        figure = plot_graphics(chi, results)
 
     return figure
 
@@ -304,7 +305,6 @@ if __name__ == '__main__':
     app.run_server(
         debug = True,
         host = '0.0.0.0',
-        port = 8050
-    )    
+        port = 8050)    
     
   
