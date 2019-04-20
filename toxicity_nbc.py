@@ -21,14 +21,6 @@ from tqdm import tqdm
 import gc
 tqdm.pandas()
 from sklearn.model_selection import train_test_split
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation
-from keras.preprocessing.sequence import pad_sequences
-import matplotlib.pyplot as plt
-from gensim.models import KeyedVectors
 import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 
